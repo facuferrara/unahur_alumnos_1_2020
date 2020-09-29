@@ -1,5 +1,7 @@
 'use strict';
+const carrera = require("../models/carrera.js");
 module.exports = {
+  
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('materia', {
       id: {
@@ -9,11 +11,15 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       nombre: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       id_carrera: {
-        type: Sequelize.INTEGER,
-        
+          type: Sequelize.INTEGER,
+          references:{
+              model: 'carreras',
+              key: 'id'
+          }
       },
       createdAt: {
         allowNull: false,

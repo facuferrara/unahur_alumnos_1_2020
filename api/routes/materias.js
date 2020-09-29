@@ -1,21 +1,36 @@
 var express = require("express");
 var router = express.Router();
 var models = require("../models");
-
+// para crear el modelo
+//npx sequelize-cli model:generate --name materias -- attributes nombre:string,id_carrera:integer
+//ok
 router.get("/", (req, res) => {
-  console.log("Esto es un mensaje para ver en consola");
+  const limite = (parseInt(req.query.cantAver) ? parseInt(req.query.cantAver) : 10 );
+  const off = (req.query.paginaActual ? limite*(parseInt(req.query.paginaActual)-1) : 0);
   models.materia
     .findAll({
-      attributes: ["id", "nombre", "id_carrera"]
+      offset : off,
+      limit: limite,
+      attributes: ["id", "nombre","id_carrera"],
+      include:[{
+        as:'Carrera-Relacionada', 
+        model:models.carrera, 
+        attributes: ["id","nombre"]
+      }]
     })
-    .then(materias => res.send(materias))
-    .catch(() => res.sendStatus(500));
+    .then(materia => {res.send(materia)})
+    .catch((e) => {
+      console.log(e);
+      res.sendStatus(500)});
 });
-
+//ok
 router.post("/", (req, res) => {
   models.materia
-    .create({ nombre: req.body.nombre })
-    .then(materia => res.status(201).send({ id: materia.id }))
+    .create({ 
+      nombre: req.body.nombre,
+      id_carrera: req.body.id_carrera
+    })
+    .then(materias => res.status(201).send({ id: materias.id }))
     .catch(error => {
       if (error == "SequelizeUniqueConstraintError: Validation error") {
         res.status(400).send('Bad request: existe otra materia con el mismo nombre')
@@ -24,7 +39,8 @@ router.post("/", (req, res) => {
         console.log(`Error al intentar insertar en la base de datos: ${error}`)
         res.sendStatus(500)
       }
-    });
+    })
+    ;
 });
 
 const findMateria = (id, { onSuccess, onNotFound, onError }) => {
@@ -33,46 +49,62 @@ const findMateria = (id, { onSuccess, onNotFound, onError }) => {
       attributes: ["id", "nombre", "id_carrera"],
       where: { id }
     })
-    .then(materia => (materia ? onSuccess(materia) : onNotFound()))
+    .then(materias => (materias ? onSuccess(materias) : onNotFound()))
+    .catch(() => onError());
+};
+const findMateria2 = (id, { onSuccess, onNotFound, onError }) => {
+  models.materia
+    .findOne({
+      attributes: ["id", "nombre", "id_carrera"],
+      where: { id },
+      include:[{
+        as:'Carrera_Relacionada', 
+        model:models.carrera, 
+        attributes: ["id","nombre"]}]
+    })
+    .then(materias => (materias ? onSuccess(materias) : onNotFound()))
     .catch(() => onError());
 };
 
 router.get("/:id", (req, res) => {
   findMateria(req.params.id, {
-    onSuccess: materia => res.send(materia),
+    onSuccess: materias => res.send(materias),
     onNotFound: () => res.sendStatus(404),
     onError: () => res.sendStatus(500)
   });
 });
-
+//para actualizar
+//ok
 router.put("/:id", (req, res) => {
   const onSuccess = materia =>
-    materia
-      .update({ nombre: req.body.nombre }, { fields: ["nombre"] })
+  materia
+      .update(
+        { nombre: req.body.nombre, id_carrera: req.body.id_carrera }, { fields: ["nombre","id_carrera"] }
+        )
       .then(() => res.sendStatus(200))
       .catch(error => {
         if (error == "SequelizeUniqueConstraintError: Validation error") {
-          res.status(400).send('Bad request: existe otra carrera con el mismo nombre')
+          res.status(400).send('Bad request: existe otra materia con el mismo nombre')
         }
         else {
           console.log(`Error al intentar actualizar la base de datos: ${error}`)
           res.sendStatus(500)
         }
       });
-    findCarrera(req.params.id, {
+      findMateria(req.params.id, {
     onSuccess,
     onNotFound: () => res.sendStatus(404),
     onError: () => res.sendStatus(500)
   });
 });
-
+//ok
 router.delete("/:id", (req, res) => {
-  const onSuccess = materia =>
-    materia
+  const onSuccess = materias =>
+  materias
       .destroy()
       .then(() => res.sendStatus(200))
       .catch(() => res.sendStatus(500));
-  findCarrera(req.params.id, {
+  findMateria(req.params.id, {
     onSuccess,
     onNotFound: () => res.sendStatus(404),
     onError: () => res.sendStatus(500)
