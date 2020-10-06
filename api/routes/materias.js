@@ -9,8 +9,6 @@ router.get("/", (req, res) => {
   const off = (req.query.paginaActual ? limite*(parseInt(req.query.paginaActual)-1) : 0);
   models.materia
     .findAll({
-      offset : off,
-      limit: limite,
       attributes: ["id", "nombre","id_carrera"],
       include:[{
         as:'Carrera-Relacionada', 
