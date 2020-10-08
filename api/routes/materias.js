@@ -9,8 +9,6 @@ router.get("/", (req, res) => {
   const off = (req.query.paginaActual ? limite*(parseInt(req.query.paginaActual)-1) : 0);
   models.materia
     .findAll({
-      offset : off,
-      limit: limite,
       attributes: ["id", "nombre","id_carrera"],
       include:[{
         as:'Carrera-Relacionada', 
@@ -73,8 +71,7 @@ router.get("/:id", (req, res) => {
     onError: () => res.sendStatus(500)
   });
 });
-//para actualizar
-//ok
+
 router.put("/:id", (req, res) => {
   const onSuccess = materia =>
   materia
@@ -97,7 +94,7 @@ router.put("/:id", (req, res) => {
     onError: () => res.sendStatus(500)
   });
 });
-//ok
+
 router.delete("/:id", (req, res) => {
   const onSuccess = materias =>
   materias
