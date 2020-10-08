@@ -13,7 +13,13 @@
     "mariadb": "^2.4.2",
     "morgan": "~1.9.1",
     "pug": "2.0.0-beta11",
-    "sequelize": "^5.21.2",
+    "sequelize": "^5.22.3",
     "sequelize-cli": "^5.5.1"
-  }
+  },
+  "main": "app.js",
+  "devDependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
