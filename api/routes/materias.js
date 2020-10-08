@@ -4,13 +4,13 @@ var models = require("../models");
 // para crear el modelo
 //npx sequelize-cli model:generate --name materias -- attributes nombre:string,id_carrera:integer
 //ok
-router.get("/", (req, res) => {
+router.get("/", (req, res) => {//orm interfaz mas amigable para trabajar con la DB
   const limite = (parseInt(req.query.cantAver) ? parseInt(req.query.cantAver) : 10 );
   const off = (req.query.paginaActual ? limite*(parseInt(req.query.paginaActual)-1) : 0);
   models.materia
-    .findAll({
+    .findAll({//me trae los atributos seleccionados
       attributes: ["id", "nombre","id_carrera"],
-      include:[{
+      include:[{ //incluyo una tabla relacional
         as:'Carrera-Relacionada', 
         model:models.carrera, 
         attributes: ["id","nombre"]
@@ -24,7 +24,7 @@ router.get("/", (req, res) => {
 //ok
 router.post("/", (req, res) => {
   models.materia
-    .create({ 
+    .create({ //insercion de un dato seleccionado
       nombre: req.body.nombre,
       id_carrera: req.body.id_carrera
     })
@@ -95,7 +95,7 @@ router.put("/:id", (req, res) => {
   });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", (req, res) => {//
   const onSuccess = materias =>
   materias
       .destroy()

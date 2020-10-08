@@ -14,7 +14,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      id_carrera: {
+      id_carrera: { //seteo el atributo junto con su tipo + las referencias del 
+                    //modelo referido y su clave primaria
           type: Sequelize.INTEGER,
           references:{
               model: 'carreras',
