@@ -8,11 +8,7 @@ router.get("/", (req, res) => {//orm interfaz mas amigable para trabajar con la 
   const limite = (parseInt(req.query.cantAver) ? parseInt(req.query.cantAver) : 10 );
   const off = (req.query.paginaActual ? limite*(parseInt(req.query.paginaActual)-1) : 0);
   models.materia
-<<<<<<< HEAD
     .findAll({//me trae los atributos seleccionados
-=======
-    .findAll({
->>>>>>> 0b0c21dc06f0c842235ef5fdb08539490931389e
       attributes: ["id", "nombre","id_carrera"],
       include:[{ //incluyo una tabla relacional
         as:'Carrera-Relacionada', 
@@ -46,15 +42,6 @@ router.post("/", (req, res) => {
 });
 
 const findMateria = (id, { onSuccess, onNotFound, onError }) => {
-  models.materia
-    .findOne({
-      attributes: ["id", "nombre", "id_carrera"],
-      where: { id }
-    })
-    .then(materias => (materias ? onSuccess(materias) : onNotFound()))
-    .catch(() => onError());
-};
-const findMateria2 = (id, { onSuccess, onNotFound, onError }) => {
   models.materia
     .findOne({
       attributes: ["id", "nombre", "id_carrera"],
