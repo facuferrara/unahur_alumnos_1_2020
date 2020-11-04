@@ -3,9 +3,12 @@ var router = express.Router();
 var models = require("../models");
 
 router.get("/", (req, res) => {
-  console.log("Esto es un mensaje para ver en consola");
+  const limite = (parseInt(req.query.cantAver) ? parseInt(req.query.cantAver) : 2 );
+  const off = (req.query.paginaActual ? limite*(parseInt(req.query.paginaActual)-1) : 0);
   models.carrera
     .findAll({
+      offset : off,
+      limit: limite,
       attributes: ["id", "nombre"]
     })
     .then(carreras => res.send(carreras))
