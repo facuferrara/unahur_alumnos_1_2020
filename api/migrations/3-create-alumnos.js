@@ -3,7 +3,7 @@ const carrera = require("../models/carrera.js");
 module.exports = {
   
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('materia', {
+    return queryInterface.createTable('alumnos', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -14,13 +14,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      apellido: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       id_carrera: { //seteo el atributo junto con su tipo + las referencias del 
-                    //modelo referido y su clave primaria
+        //modelo referido y su clave primaria
         type: Sequelize.INTEGER,
         references:{
-            model: 'carreras',
-            key: 'id'
-          }
+        model: 'carreras',
+        key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
@@ -33,6 +37,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('materia');
+    return queryInterface.dropTable('alumnos');
   }
 };

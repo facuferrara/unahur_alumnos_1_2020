@@ -5,10 +5,13 @@ module.exports = (sequelize, DataTypes) => {
     id_sede: DataTypes.INTEGER
   }, {});
   carrera.associate = function (models) {
-    carrera.hasMany(models.materia,
-      {
+    carrera.hasMany(models.materia,{
         as: "Carrera-Relacionada",
         primaryKey: "id"
+      })
+      carrera.hasMany(models.alumno,{
+        as: 'Alumno-Relacionado',
+        primaryKey: 'id'
       })
   };
   return carrera;
