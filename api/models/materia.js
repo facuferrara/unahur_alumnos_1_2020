@@ -12,10 +12,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'id_carrera'   // campo con el que voy a igualar
       })
       
-    materia.belongsTo(models.profesores,{ // modelo al que pertenece
+    materia.belongsTo(models.profesores,{ 
       
-        as : 'Profesor-Relacionado',  // nombre de la relación
-        foreignKey: 'id_profesor'     // campo con el que voy a igualar
+        as : 'Profesor-Relacionado',  
+        foreignKey: 'id_profesor'     //esta se refiere a un tipo de columna en especifico y ademas debe ser del mismo tipo.
       });
   };
   return materia;
