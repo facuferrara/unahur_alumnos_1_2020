@@ -6,7 +6,7 @@ var models = require("../models");
 //req es un objeto que contiene información sobre la solicitud HTTP que generó el evento y res devuelve la respuesta http deseadaf  1|  
 router.get("/", (req, res) => {//orm interfaz mas amigable para trabajar con la DB
   
-  const limite = (parseInt(req.query.cantAver) ? parseInt(req.query.cantAver) : 3 );//lo que pasa por parametro lo pasa a integer, 
+  const limite = (parseInt(req.query.cantAver) ? parseInt(req.query.cantAver) : 10 );//lo que pasa por parametro lo pasa a integer, 
   //la req devuelve las variables del formulario,
   // y con query saco las variables de la direccion,
   // con el signo es un ternario(if simplif), lo de la izq es la condicion, lo de la derecha si es afirmativo y separado por dos puntos, lo que es falso.

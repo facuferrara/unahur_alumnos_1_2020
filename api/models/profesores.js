@@ -6,8 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     id_materia: DataTypes.INTEGER
   }, {});
   profesores.associate = function(models) {
-      profesores.belongsTo(models.materia  
-        ,{
+      profesores.belongsTo(models.materia,{
           as : 'Materia-Relacionada',   
           foreignKey: 'id_materia'     
         })

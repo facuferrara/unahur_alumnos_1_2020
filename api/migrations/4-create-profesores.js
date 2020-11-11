@@ -15,7 +15,11 @@ module.exports = {
         type: Sequelize.STRING
       },
       id_materia: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references:{
+          model: 'materia',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,

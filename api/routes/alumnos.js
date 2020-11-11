@@ -8,7 +8,7 @@ var models = require("../models");
 
 router.get("/", (req, res) => {
 
-  const limite = (parseInt(req.query.cantAver) ? parseInt(req.query.cantAver) : 2 );
+  const limite = (parseInt(req.query.cantAver) ? parseInt(req.query.cantAver) : 10 );
   const off = (req.query.paginaActual ? limite*(parseInt(req.query.paginaActual)-1) : 0);
   
   models.alumno
