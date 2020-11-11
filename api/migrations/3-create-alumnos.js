@@ -26,6 +26,15 @@ module.exports = {
         key: 'id'
         }
       },
+      id_profesor: { //seteo el atributo junto con su tipo + las referencias del 
+        //modelo referido y su clave primaria
+        type: Sequelize.INTEGER,
+        references:{
+        model: 'profesor',
+        key: 'id'
+        }
+      },
+      
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

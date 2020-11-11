@@ -10,6 +10,12 @@ module.exports = (sequelize, DataTypes) => {
       as: 'Alumno-Relacionado',  // nombre de mi relación
       foreignKey: 'id_carrera'
       })
+    alumno.belongsTo(models.profesores,{
+      as: "Alu-Relacionado",
+      primaryKey: "id"
+    })
+      
+  
    };
   return alumno;
 };

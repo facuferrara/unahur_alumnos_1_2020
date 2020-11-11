@@ -2,10 +2,15 @@
 module.exports = (sequelize, DataTypes) => {
   const profesores = sequelize.define('profesores', {
     nombre: DataTypes.STRING,
+    apellido: DataTypes.STRING,
     id_materia: DataTypes.INTEGER
   }, {});
   profesores.associate = function(models) {
-    // associations can be defined here
-  };
+      profesores.belongsTo(models.materia  
+        ,{
+          as : 'Materia-Relacionada',   
+          foreignKey: 'id_materia'     
+        })
+    };
   return profesores;
 };

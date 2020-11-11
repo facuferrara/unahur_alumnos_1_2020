@@ -11,6 +11,9 @@ module.exports = {
       nombre: {
         type: Sequelize.STRING
       },
+      apellido: {
+        type: Sequelize.STRING
+      },
       id_materia: {
         type: Sequelize.INTEGER
       },

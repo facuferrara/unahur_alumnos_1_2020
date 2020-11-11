@@ -59,7 +59,7 @@ const findAlumno = (id, { onSuccess, onNotFound, onError }) => {
 
 //get con atributo 
 router.get("/:id", (req, res) => {
-  findAlumno2(req.params.id, {
+  findAlumno(req.params.id, {
     onSuccess: alumno => res.send(alumno),
     onNotFound: () => res.sendStatus(404),
     onError: () => res.sendStatus(500)
